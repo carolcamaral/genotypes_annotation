@@ -1,11 +1,9 @@
 #!/bin/bash
 
-# Usage: ./run_annovar_pipeline.sh TONIC-PERRON_EUR_release10 TONIC-PERRON_000276_s1
-
 # Input arguments
 FILE_NAME="$1"
 ID="$2"
-BASH_DIRECTORY="$3"
+BASH_DIRECTORY="${3:-genotypes_annotation}"
 
 # Store current path
 WORKDIR=$(pwd)
@@ -22,17 +20,18 @@ mkdir -p "${FILE_NAME}/${ID}"
 echo "Created ${FILE_NAME}/${ID} directory"
 
 # Extract individual from PLINK file to VCF
-plink2 --pfile "${FILE_NAME}" --indv "${ID}" --recode vcf id-paste=iid --out "${FILE_NAME}/${ID}"
-echo "Plink run"
+echo "Running Plink2"
+plink2 --pfile "${FILE_NAME}" --indv "${ID}" --recode vcf id-paste=iid --out "${FILE_NAME}/${ID}/${ID}"
 
 # Move into annovar directory to run annotation
 cd "${ANNOVAR_DIRECTORY}"  # <- Replace this with the actual full path to your annovar directory
 echo "Current directory: $(pwd)"
 
 # Annotate VCF using ANNOVAR
-./table_annovar.pl "${WORKDIR}/${FILE_NAME}/${ID}.vcf" humandb/ \
+echo "Running ANNOVAR"
+./table_annovar.pl "${WORKDIR}/${FILE_NAME}/${ID}/${ID}.vcf" humandb/ \
   -buildver hg38 \
-  -out "${WORKDIR}/${FILE_NAME}/${ID}" \
+  -out "${WORKDIR}/${FILE_NAME}/${ID}/${ID}" \
   -remove \
   -protocol refGene,cytoBand,exac03,avsnp150,dbnsfp47a,clinvar_20220320,dbscsnv11 \
   -operation g,r,f,f,f,f,f \
@@ -40,14 +39,14 @@ echo "Current directory: $(pwd)"
   -vcfinput \
   -polish
 
-echo "Run annovar"
-
 
 # Return to original working directory
 cd "$WORKDIR"
 echo "Current directory: $(pwd)"
 
+
 # Filter annotated results
+echo "Filtering Results"
 awk -F'\t' '
 NR==1 {
     print; next
@@ -60,4 +59,5 @@ NR==1 {
     if ($87 >= 0.6) count++;
     if ($55 >= 0.6) count++;
     if (count >= 3) print
-}' "${FILE_NAME}/${ID}.hg38_multianno.txt" > "${FILE_NAME}/${ID}.hg38_multianno_filtered_output.txt"
+}' "${FILE_NAME}/${ID}/${ID}.hg38_multianno.txt" > "${FILE_NAME}/${ID}/${ID}.hg38_multianno_filtered_output.txt"
+
