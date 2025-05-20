@@ -74,43 +74,43 @@ cd annovar
 ### 4. Move the raw genotypes data into the folder
 You can use pshell to move files between the Data Storage and your local Pawsey scratch directory.
 
-1. Navigate to your project folder:
-```bash
-cd $MYSCRATCH/work_genotypes/genotypes_annotation
-````
-2. Load Python module:
+   4.1. Navigate to your project folder:
+   ```bash
+   cd $MYSCRATCH/work_genotypes/genotypes_annotation
+   ````
+   4.2. Load Python module:
    Check available Python versions:
    ```bash
     module load python/3.11.6
-    ````
-![image](https://github.com/user-attachments/assets/c10f996d-4ed5-489a-8028-a72513199025)
-3. Run pshell:
+   ````
+   ![image](https://github.com/user-attachments/assets/c10f996d-4ed5-489a-8028-a72513199025)
+   4.3. Run pshell:
    ```bash
-    python pshell 
+       python pshell 
    ````
-4. Log in to the data system:
- ```bash
-    login 
+   4.4. Log in to the data system:
+   ```bash
+       login 
    ````
-Enter your username and password when prompted.
-5. Navigate to your remote data directory (Replace with your actual remote data path). Example:
- ```bash
-    cd projects/PPMIgenomics/GP2data/gp2_tonic-perron/WGS_052025/release10/raw-genotypes/EUR/
+   Enter your username and password when prompted.
+   4.5. Navigate to your remote data directory (Replace with your actual remote data path). Example:
+   ```bash
+       cd projects/PPMIgenomics/GP2data/gp2_tonic-perron/WGS_052025/release10/raw-genotypes/EUR/
    ````
-6. Make sure you are in your local working directory:
- ```bash
-    lcd $MYSCRATCH/work_genotypes
-  ````
-7. Transfer files from remote to local using GET. Example:
- ```bash
-    get TONIC*
-  ````
-You can replace TONIC* with the filenames or patterns you need
-8. Exit pshell:
-```bash
-    exit
-````
-![image](https://github.com/user-attachments/assets/017ff839-5f2b-48b0-b919-4b12f578ad7f)
+   4.6. Make sure you are in your local working directory:
+   ```bash
+       lcd $MYSCRATCH/work_genotypes
+   ````
+   4.7. Transfer files from remote to local using GET. Example:
+   ```bash
+       get TONIC*
+   ````
+   You can replace TONIC* with the filenames or patterns you need
+   4.8. Exit pshell:
+   ```bash
+       exit
+   ````
+   ![image](https://github.com/user-attachments/assets/017ff839-5f2b-48b0-b919-4b12f578ad7f)
 
 
 ## How to Run the Pipeline
