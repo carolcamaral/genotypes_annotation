@@ -11,8 +11,8 @@ fi
 
 while read -r ID; do
   [[ -z "$ID" ]] && continue  # Skip empty lines
-
-  JOB_SCRIPT="job_${ID}.sh"
+  mkdir ${FILE_NAME}/${ID}
+  JOB_SCRIPT="${FILE_NAME}/${ID}/job_${ID}.sh"
 
   cat <<EOF > "$JOB_SCRIPT"
 #!/bin/bash
