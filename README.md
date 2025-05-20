@@ -44,14 +44,21 @@ A variant is retained only if **at least 3 out of these 5 scores have a rank sco
 
 ## Installation
 
-### 1. Clone this repository
+### 1. Create a work folder in Scratch
+Example:
+```bash
+cd $MYSCRATCH
+mkdir work_genotypes
+````
+
+### 2. Clone this repository
 
 ```bash
 git clone git@github.com:carolcamaral/genotypes_annotation.git
 cd genotypes_annotation
 ````
 
-### 2. Download ANNOVAR databases
+### 3. Download ANNOVAR databases
 Move into the annovar directory and download the required annotation databases (this step may take a while):
 ```bash
 cd annovar
@@ -63,6 +70,20 @@ cd annovar
 ./annotate_variation.pl -buildver hg38 -downdb -webfrom annovar clinvar_20220320 humandb/
 ./annotate_variation.pl -buildver hg38 -downdb -webfrom annovar dbscsnv11 humandb/
 ````
+
+### 4. Move the raw genotypes data into the folder
+You can use psheel do perform that. 
+cd $MYSCRATCH/work_genotypes/genotypes_annotation
+module avail python
+check the available versions and do a module load python_<version> 
+python pshell 
+login
+username and password
+cd <directory name example /PPMIgenomics/GP2data/gp2_tonic-perron/WGS_052025/release10/raw-genotypes/EUR/ > 
+lcd ..
+get <FILE_NAMES>.* Example TONIC-PERRON_EUR_release10*
+exit
+
 
 ## How to Run the Pipeline
 Run the pipeline from your working directory by specifying:
