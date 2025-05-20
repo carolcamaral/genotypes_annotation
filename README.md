@@ -111,14 +111,46 @@ You can use pshell to move files between the Data Storage and your local Pawsey 
 
 
 ## How to Run the Pipeline
+
+### 1. Single ID 
 Run the pipeline from your working directory by specifying:
 1. The base name of your PLINK dataset (e.g., TONIC-PERRON_EUR_release10)
-2. The sample ID to extract (e.g., TONIC-PERRON_{ID}_s1)
-3. The full directory where the annotation_pipeline is (eg: $MYSCRATCH/genotypes_annotation)
+2. The sample ID to extract (e.g., TONIC-PERRON_{ID})
+3. (Optional) The root directory where the annovar/ folder is located.
+   - Default: genotypes_annotation
+   - If your ANNOVAR setup is stored elsewhere, provide the full path to that directory.
 
 ```bash
-genotypes_annotation/annotation_pipeline.sh $MYSCRATCH/work_genotypes/TONIC-PERRON_EUR_release10 TONIC-PERRON_{ID}_s1 $MYSCRATCH/genotypes_annotation
+cd $MYSCRATCH/work_genotypes
+genotypes_annotation/annotation_pipeline.sh TONIC-PERRON_EUR_release10 TONIC-PERRON_{ID}
 ````
+
+### 2. Multiple IDs (Batch Submission with SLURM)
+To process multiple IDs at once and submit jobs to the SLURM scheduler:
+1. Create a text file (e.g., ids.txt) with one ID per line.
+2. Use the helper script to generate and submit SLURM jobs for each ID.
+
+```bash
+cd $MYSCRATCH/work_genotypes
+genotypes_annotation/submit_annotation_jobs.sh TONIC-PERRON_EUR_release10 ids.txt
+````
+where ids.txt should look like:
+```bash
+TONIC-PERRON_000123_s1
+TONIC-PERRON_000124_s1
+TONIC-PERRON_000125_s1
+TONIC-PERRON_000126_s1
+TONIC-PERRON_000127_s1
+```
+Each line contains a single individual/sample ID, exactly as they appear in your PLINK dataset.
+Avoid adding extra spaces or file extensions.
+
+You can create this file manually or use tools like cut, awk, or grep if you want to extract IDs from an existing metadata or .psam file.
+
+This script will:
+- Loop through each ID in ids.txt
+- Dynamically create a job script for each ID
+- Submit the job using sbatch
 
 ## Output
 1. A VCF file for the selected sample
