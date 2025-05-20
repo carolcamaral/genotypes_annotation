@@ -132,9 +132,9 @@ To process multiple IDs at once and submit jobs to the SLURM scheduler:
 
 ```bash
 cd $MYSCRATCH/work_genotypes
-genotypes_annotation/submit_annotation_jobs.sh TONIC-PERRON_EUR_release10 ids.txt
+genotypes_annotation/batch_annotation_pipeline.sh list_ids.txt TONIC-PERRON_EUR_release10
 ````
-where ids.txt should look like:
+where list_ids.txt should look like:
 ```bash
 TONIC-PERRON_000123_s1
 TONIC-PERRON_000124_s1
