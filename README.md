@@ -49,3 +49,36 @@ A variant is retained only if **at least 3 out of these 5 scores have a rank sco
 ```bash
 git clone git@github.com:carolcamaral/genotypes_annotation.git
 cd genotypes_annotation
+````
+
+### 2. Download ANNOVAR databases
+Move into the annovar directory and download the required annotation databases (this step may take a while):
+```bash
+cd annovar
+./annotate_variation.pl -buildver hg38 -downdb cytoBand humandb/
+./annotate_variation.pl -buildver hg38 -downdb -webfrom annovar refGene humandb/
+./annotate_variation.pl -buildver hg38 -downdb -webfrom annovar exac03 humandb/
+./annotate_variation.pl -buildver hg38 -downdb -webfrom annovar avsnp150 humandb/
+./annotate_variation.pl -buildver hg38 -downdb -webfrom annovar dbnsfp47a humandb/
+./annotate_variation.pl -buildver hg38 -downdb -webfrom annovar clinvar_20220320 humandb/
+./annotate_variation.pl -buildver hg38 -downdb -webfrom annovar dbscsnv11 humandb/
+````
+
+## How to Run the Pipeline
+Run the pipeline from your working directory by specifying:
+1. The base name of your PLINK dataset (e.g., TONIC-PERRON_EUR_release10)
+2. The sample ID to extract (e.g., TONIC-PERRON_{ID}_s1)
+3. The full directory where the annotation_pipeline is (eg: $MYSCRATCH/genotypes_annotation)
+
+```bash
+genotypes_annotation/annotation_pipeline.sh $MYSCRATCH/work_genotypes/TONIC-PERRON_EUR_release10 TONIC-PERRON_{ID}_s1 $MYSCRATCH/genotypes_annotation
+````
+
+## Output
+1. A VCF file for the selected sample
+2. ANNOVAR-annotated file: {ID}.hg38_multianno.txt
+3. Filtered file: {ID}.hg38_multianno_filtered_output.txt
+
+Filtered results contain only:
+- Non-reference genotypes (0/1 or 1/1)
+- Variants with ≥3 out of 5 selected dbNSFP rank scores > 0.6
