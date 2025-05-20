@@ -78,8 +78,7 @@ You can use pshell to move files between the Data Storage and your local Pawsey 
    ```bash
    cd $MYSCRATCH/work_genotypes/genotypes_annotation
    ````
-   4.2. Load Python module:
-   Check available Python versions:
+   4.2. Load Python module (Check available Python versions):
    ```bash
     module load python/3.11.6
    ````
@@ -88,11 +87,10 @@ You can use pshell to move files between the Data Storage and your local Pawsey 
    ```bash
        python pshell 
    ````
-   4.4. Log in to the data system:
+   4.4. Log in to the data system. Enter your username and password when prompted.
    ```bash
        login 
    ````
-   Enter your username and password when prompted.
    4.5. Navigate to your remote data directory (Replace with your actual remote data path). Example:
    ```bash
        cd projects/PPMIgenomics/GP2data/gp2_tonic-perron/WGS_052025/release10/raw-genotypes/EUR/
@@ -101,11 +99,10 @@ You can use pshell to move files between the Data Storage and your local Pawsey 
    ```bash
        lcd $MYSCRATCH/work_genotypes
    ````
-   4.7. Transfer files from remote to local using GET. Example:
+   4.7. Transfer files from remote to local using GET. Example (You can replace TONIC* with the filenames or patterns you need):
    ```bash
        get TONIC*
    ````
-   You can replace TONIC* with the filenames or patterns you need
    4.8. Exit pshell:
    ```bash
        exit
