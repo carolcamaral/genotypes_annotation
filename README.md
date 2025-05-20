@@ -152,6 +152,11 @@ This script will:
 - Dynamically create a job script for each ID
 - Submit the job using sbatch
 
+You can check all your current jobs using:
+```bash
+squeue -u $USER
+```
+
 ## Output
 1. A VCF file for the selected sample
 2. ANNOVAR-annotated file: {ID}.hg38_multianno.txt
