@@ -61,3 +61,17 @@ NR==1 {
     if (count >= 3) print
 }' "${FILE_NAME}/${ID}/${ID}.hg38_multianno.txt" > "${FILE_NAME}/${ID}/${ID}.hg38_multianno_filtered_output.txt"
 
+GENE_LIST="${WORKDIR}/genotypes_annotation/disease_related_genes/parkinson_gene_list.txt" 
+
+# If gene list is provided, filter by it
+if [[ -n "$GENE_LIST" ]]; then
+  echo "Filtering '"${FILE_NAME}/${ID}/${ID}.hg38_multianno_filtered_output.txt"' using gene list '$GENE_LIST'"
+  awk 'BEGIN {FS=OFS="\t"}
+       NR==FNR { genes[$1]; next }
+       FNR==1 || $7 in genes' "$GENE_LIST" "${FILE_NAME}/${ID}/${ID}.hg38_multianno_filtered_output.txt" > "${FILE_NAME}/${ID}/${ID}.hg38_multianno_filtered_output_parkinsons_disease_genes.txt"
+
+else
+  echo "No gene list provided."
+fi
+
+echo "Finished"
