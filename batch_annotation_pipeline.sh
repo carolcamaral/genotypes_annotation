@@ -34,5 +34,6 @@ bash ${ANNOVAR_ROOT_DIR}/annotation_pipeline.sh $FILE_NAME $ID $ANNOVAR_ROOT_DIR
 EOF
 
   chmod +x "$JOB_SCRIPT"
+  sed -i 's/\r$//' "$JOB_SCRIPT"
   sbatch "$JOB_SCRIPT"
 done < "$ID_FILE"
