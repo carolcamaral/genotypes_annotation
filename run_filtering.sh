@@ -1,9 +1,7 @@
 #!/bin/bash
 
 # Input arguments
-FILE_NAME="$1"
-ID="$2"
-TXT_FILE_NAME="$3"
+TXT_FILE_NAME="$1"
 
 # Setup
 TXT_DIR=$(dirname "$TXT_FILE_NAME")
