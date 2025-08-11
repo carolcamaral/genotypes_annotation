@@ -13,21 +13,25 @@ GENE_LIST_MND="${WORKDIR}/genotypes_annotation/disease_related_genes/mnd_gene_li
 GENE_LIST_AD="${WORKDIR}/genotypes_annotation/disease_related_genes/alzheimer_gene_list.txt"
 
 
-# Filter annotated results
+# Filter annotated results 
 echo "Filtering Results"
 awk -F'\t' '
 NR==1 {
     print; next
 }
-($189 ~ /^0\/1/ || $189 ~ /^1\/1/) {
-    count = 0;
-    if ($81 >= 0.6) count++;
-    if ($84 >= 0.6) count++;
-    if ($50 >= 0.6) count++;
-    if ($87 >= 0.6) count++;
-    if ($55 >= 0.6) count++;
-    if (count >= 3) print
+{
+    split($189, a, ":") # Extract genotype part
+    if (a[1] != "0/0" && a[1] != "./.") {
+        count = 0
+        if ($81 >= 0.6) count++
+        if ($84 >= 0.6) count++
+        if ($50 >= 0.6) count++
+        if ($87 >= 0.6) count++
+        if ($55 >= 0.6) count++
+        if (count >= 3) print
+    }
 }' "${TXT_FILE_NAME}" > "${TXT_DIR}/${BASE_NAME}_filtered_output.txt"
+
 
 # Parkinson's
 if [[ -n "$GENE_LIST_PD" ]]; then
